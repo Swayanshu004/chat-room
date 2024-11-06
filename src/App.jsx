@@ -6,7 +6,6 @@ function App() {
   const socket = useMemo(()=>io("http://localhost:3000"),[]);
   const [message , setMessage] = useState("");
   const [room , setRoom] = useState("");
-  const [roomName , setRoomName] = useState("");
   const [socketId , setSocketId] = useState("");
   const [messages , setMessages] = useState([]);
 
@@ -27,15 +26,10 @@ function App() {
     setMessage("");
     setRoom("");
   }
-  const handlejoinRoom = (e)=>{
-    e.preventDefault();
-    socket.emit("join-room", roomName);
-    setRoomName("");
-  }
 
   return (
     <>
-    <h3 style={{padding: "10px 30px"}}>{socketId}</h3>
+    <h3 className='px-10 py-4 bg-[#606c38] text-white font-semibold'>{socketId}</h3>
     <div>
       {
         messages.map((m, i)=> (
@@ -47,22 +41,6 @@ function App() {
       }
     </div>
     <div style={{width: "100vw", height: "100vh"}}>
-
-      <form 
-      onSubmit={handlejoinRoom}
-      style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", width: "100vw"}}>
-        <TextField
-          required
-          label="Room Name"
-          value={roomName}
-          onChange={(e)=>setRoomName(e.target.value)}
-          style={{height: "50px", width: "200px"}}
-        />
-        <Button 
-        type='submit' 
-        variant="text"
-        style={{height: "50px",width: "100px", backgroundColor: "#606c38", color: "white"}}>JOIN</Button>
-      </form>
       <form 
       onSubmit={handleSendBtn}
       style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "10px", position: "absolute",bottom: "30px",width: "100vw"}}>
